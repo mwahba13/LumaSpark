@@ -25,20 +25,35 @@ controls.update();
 
 //splat 1 init
 let splat_0 = new memlSplat.Splat('https://lumalabs.ai/capture/d80d4876-cf71-4b8a-8b5b-49ffac44cd4a');
+splat_0.sceneTimer = 5
 //set a splats bounding box before setting shader hooks
-splat_0.boundingBox.set(new three.Vector3(-4,-4,-4),new three.Vector3(5,5,5));
-//splat_0.debugDrawBoundingBox = true;
+splat_0.boundingBox.set(new three.Vector3(-2,-2,-2),new three.Vector3(5,5,5));
+splat_0.debugDrawBoundingBox = true;
 splat_0.SetShaderHooks();
-//last step
-splat_0.AddToScene(scene);
 
-//compass
-let comp = new Compass();
-comp.AddToScene(scene);
+//add actions
+splat_0.EnqueueSplatAction(new memlSplat.DebugAction(),2);
+
+//splat 2 init
+let splat_1 = new memlSplat.Splat("https://lumalabs.ai/capture/de9b3594-54f4-42e9-ab24-7dcb9a9c9a3d");
+splat_1.sceneTimer = 12;
+splat_1.SetShaderHooks();
+
+splat_1.EnqueueSplatAction(new memlSplat.DebugAction(), 5);
+splat_1.EnqueueSplatAction(new memlSplat.DebugAction(), 10);
+
+//init splatQueue
+let splatQueue = new memlSplat.SplatQueue(scene);
+
+//add splats to queue
+splatQueue.AddSplatToQueue(splat_0);
+splatQueue.AddSplatToQueue(splat_1);
+
 
 function animate(){
     requestAnimationFrame(animate);
 
+    splatQueue.Tick();
     controls.update();
 
     render();
