@@ -11,6 +11,17 @@ export class Splat{
     position:Vector3;
     rotation:Vector3;
     rgba:Vector4;
+    opacity: number;
+    opacityUni:Uniform;
+    time:Uniform;
+
+    //uniforms
+    x:number;
+    y:number;
+    z:number;
+    xUni:Uniform;
+    yUni:Uniform;
+    zUni:Uniform;
     
     //box
     boundingBox:Box3;
@@ -26,19 +37,42 @@ export class Splat{
     splatActions:SplatAction[];
     splatActionIndex:number;
 
+    //interp
+    interpXt:number = 0.;
+    interpYt:number = 0.;
+    interpZt:number = 0.;
+
     constructor(uri:string, pos:Vector3 = new Vector3(0,0,0), rot:Vector3 = new Vector3(0,0,0))
     {
+        this.opacityUni = new Uniform(1);
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
+        this.xUni = new Uniform(1);
+        this.yUni = new Uniform(1);
+        this.zUni = new Uniform(1);
+        this.opacity = 1;
+        this.time = new Uniform(0);
+
         this.uri = uri;
         this.position = pos;
         this.rotation = rot;
         this.lumaSplat = new LumaSplatsThree({
-            source:uri
+            source:uri,
+            onBeforeRender:()=>{
+                this.opacityUni.value = this.opacity;
+                this.time.value = performance.now()/1000;
+                this.xUni.value = this.x;
+                this.yUni.value = this.y;
+                this.zUni.value = this.z;
+            }
         });
         this.boundingBox = new Box3;
         this.sceneTimer = 0;
 
         this.splatActions = [];
         this.splatActionIndex = 0;
+        
     }
 
     public EnqueueSplatAction(action:SplatAction, time:number)
@@ -49,7 +83,6 @@ export class Splat{
 
     public AddToScene(scene:THREE.Scene)
     {
-        console.log("flag 2");
         this.scene = scene;
 
         if(this.debugDrawBoundingBox)
@@ -95,16 +128,32 @@ export class Splat{
                     maxY:['float',new Uniform(this.boundingBox.max.y)],
                     minZ:['float',new Uniform(this.boundingBox.min.z)],
                     maxZ:['float',new Uniform(this.boundingBox.max.z)],
+                    opacity:['float',this.opacityUni],
+                    time:['float',this.time],
+                    x:['float',this.xUni],
+                    y:['float',this.yUni],
+                    z:['float',this.zUni],
                 },
                 getSplatColor:`
                     (vec4 rgba, vec3 pos, uint layersBitmask){
-                        if(pos.x < minX || pos.y < minY  || pos.z < minZ  || pos.x > maxX || pos.y > maxY || pos.z > maxZ)
-                        {
-                            return rgba;
-                        }
-                        vec4(0.,0.,0.,0.);
+                        return rgba;
+                        
                     }
-                `
+                `,
+                getSplatTransform:`
+                    (vec3 pos, uint layersBitMask)
+                    {
+                        float x = 0.;
+                        float y = 0.;
+                        float z = 0.;
+                        return mat4(
+                            1.,0.,0.,0.,
+                            0.,1.,0.,0.,
+                            0.,0.,1.,0.,
+                            x, y, z, 1.                         
+                        );
+                    }
+                `,
             }
         })
     }
@@ -114,28 +163,37 @@ export class Splat{
 
     }
 
+    protected OnTick(clock:Clock){
+
+    }
+
     public Tick(clock:Clock)
     {
+        this.OnTick(clock);
         //if we havent hit the end of the splat action queue
         if(this.splatActionIndex != -1)
         {
             let currentAction = this.splatActions[this.splatActionIndex];
-
-            if(clock.elapsedTime >= currentAction.actionTime)
+            if(currentAction)
             {
-                //hit time to execute action
-                console.log("execute action at: " + clock.getElapsedTime());
-                this.splatActions[this.splatActionIndex].executeAction();
-    
-                //increment index
-                this.splatActionIndex++;
-                if(this.splatActions.length == this.splatActionIndex)
+                if(clock.elapsedTime >= currentAction.actionTime)
                 {
-                    console.log("End of Queue at time: " + clock.elapsedTime)
-                    this.splatActionIndex = -1;
+                    //hit time to execute action
+                    if(this.splatActions[this.splatActionIndex].executeAction(clock))
+                    {
+            
+                        //increment index
+                        this.splatActionIndex++;
+                        if(this.splatActions.length == this.splatActionIndex)
+                        {
+                            this.splatActionIndex = -1;
+                        }
+                    }
+
+        
                 }
-    
             }
+
         }
 
 
@@ -184,12 +242,53 @@ export class SplatQueue {
 
     }
 
+    public LoadSceneByIndex(i:number)
+    {
+        console.log("load splat");
+        if(!this.isFinished)
+            {
+                if(this.timer.getElapsedTime() == 0)
+                {
+                    this.timer.start();
+                }
+
+                this.currentSplatIndex = i;
+                if(this.currentSplatIndex >= this.splats.length)
+                {
+                    return;
+                }
+                else
+                {
+                    //remove old scene
+                    this.currentSplat.RemoveFromScene();
+    
+                    //add new scene
+                    this.currentSplat = this.splats[this.currentSplatIndex];
+    
+    
+                    this.currentSplat.AddToScene(this.currentScene);
+    
+                    this.currentSplat.StartScene();
+                    this.sequenceLength = this.currentSplat.sceneTimer;
+    
+                    this.timer.start();
+                    //transition to next scene
+                }
+                
+            }
+    }
+
     public Tick()
     {
         //check if time is up
         if(!this.isFinished)
         {
             this.LoadNextSplat();
+
+            if(this.isFinished)
+            {
+                return;
+            }
 
             this.currentSplat.Tick(this.timer);
     
@@ -199,38 +298,43 @@ export class SplatQueue {
 
     private LoadNextSplat()
     {
-        if(this.timer.getElapsedTime() == 0)
+        if(!this.isFinished)
         {
-            this.timer.start();
-        }
-        //if time is up, load next splat
-        if(this.timer.getElapsedTime() > this.sequenceLength)
-        {
-            this.currentSplatIndex++;
-            if(this.currentSplatIndex > this.splats.length)
+            if(this.timer.getElapsedTime() == 0)
             {
-                //we hit the end
-                this.isFinished = true;
-                this.timer.stop();
-            }
-            else
-            {
-                //remove old scene
-                this.currentSplat.RemoveFromScene();
-
-                //add new scene
-                this.currentSplat = this.splats[this.currentSplatIndex];
-
-
-                this.currentSplat.AddToScene(this.currentScene);
-
-                this.currentSplat.StartScene();
-                this.sequenceLength = this.currentSplat.sceneTimer;
-
                 this.timer.start();
-                //transition to next scene
             }
+            //if time is up, load next splat
+            if(this.timer.getElapsedTime() > this.sequenceLength)
+            {
+                this.currentSplatIndex++;
+                if(this.currentSplatIndex >= this.splats.length)
+                {
+                    //we hit the end
+                    console.log("end of queue");
+                    this.isFinished = true;
+                    this.timer.stop();
+                }
+                else
+                {
+                    //remove old scene
+                    this.currentSplat.RemoveFromScene();
+    
+                    //add new scene
+                    this.currentSplat = this.splats[this.currentSplatIndex];
+    
+    
+                    this.currentSplat.AddToScene(this.currentScene);
+    
+                    this.currentSplat.StartScene();
+                    this.sequenceLength = this.currentSplat.sceneTimer;
+    
+                    this.timer.start();
+                    //transition to next scene
+                }
+            } 
         }
+        
     }
 
 }
@@ -239,17 +343,92 @@ abstract class SplatAction {
 
     actionTime:number = 0;
 
-    public abstract executeAction(): void;
-
-    constructor()
+    protected splatOwner:Splat;
+    public abstract executeAction(clock:Clock): boolean;
+    
+    constructor(splat:Splat)
     {
+        this.splatOwner = splat;
         this.actionTime = 0;
     }
 }
 
 export class DebugAction extends SplatAction{
 
-    public executeAction(): void {
+    public executeAction(clock:Clock): boolean {
         console.log("action executed");
+        return true;
+
+    }
+
+}
+
+export class ChangeXValueAction extends SplatAction{
+
+    param:number;
+
+    constructor(splat:Splat,num:number)
+    {
+        super(splat);
+        this.param = num;
+    }
+
+    public executeAction(clock:Clock): boolean {
+        this.splatOwner.x = this.param;
+        return true;
+
+    }
+}
+
+export class ChangeYValueAction extends SplatAction{
+    param:number;
+
+    constructor(splat:Splat,num:number)
+    {
+        super(splat);
+        this.param = num;
+    }
+    
+    public override executeAction(clock:Clock):boolean {
+        let newY = this.param;
+        this.splatOwner.y = newY; 
+        return true;
+
+    }
+}
+
+export class ChangeZValueAction extends SplatAction{
+
+    param:number;
+
+    constructor(splat:Splat,num:number)
+    {
+        super(splat);
+        this.param = num;
+    }
+
+    public executeAction(clock:Clock): boolean {
+        let newZ = this.param;
+        this.splatOwner.z = newZ; 
+        return true;
+    }
+}
+
+export class SetXInterpAction extends SplatAction
+{
+    x:number;
+    y:number;
+    timeRange:number = -1;
+    constructor(splat:Splat,num:number)
+    {
+        super(splat);
+    }
+
+    public executeAction(clock: Clock): boolean {
+
+
+
+
+        return false;
     }
 }
