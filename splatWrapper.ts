@@ -163,6 +163,11 @@ export class Splat{
 
     }
 
+    public EndScene()
+    {
+
+    }
+
     protected OnTick(clock:Clock){
 
     }
@@ -318,12 +323,11 @@ export class SplatQueue {
                 else
                 {
                     //remove old scene
+                    this.currentSplat.EndScene();
                     this.currentSplat.RemoveFromScene();
     
                     //add new scene
                     this.currentSplat = this.splats[this.currentSplatIndex];
-    
-    
                     this.currentSplat.AddToScene(this.currentScene);
     
                     this.currentSplat.StartScene();

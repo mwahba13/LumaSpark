@@ -49,6 +49,15 @@ export class benchSplat extends Splat
         let t = clock.elapsedTime/lerpInterval;
         this.x,this.z = MathUtils.lerp(0,500000,t);
     }
+
+    public override StartScene(): void {
+        console.log("start bench scene");
+    }
+
+    public override EndScene(): void {
+        console.log("end bench scene");
+
+    }
     
 }
 export class benchSplatRev extends Splat
