@@ -21,11 +21,24 @@ let hasStarted = false;
 
 // renderer and canvas
 let renderer = new three.WebGLRenderer({});
-document.body.appendChild(renderer.domElement);
+//document.body.appendChild(renderer.domElement);
 let canvas = renderer.getContext().canvas as HTMLCanvasElement;
 renderer.setSize(window.innerWidth,window.innerHeight, false);
+renderer.xr.enabled = true;
 
+const audioLoader = new three.AudioLoader();
+
+//init VR Button
 let vrButton = VRButton.createButton(renderer);
+document.body.appendChild(renderer.domElement);
+vrButton.addEventListener('click', function(){
+    audioLoader.load('sounds/gadda.ogg',function(buffer){
+        //scene_1_bgm.setBuffer(buffer);
+        //scene_1_bgm.setLoop(true);
+        //scene_1_bgm.setVolume(0.5);
+        //scene_1_bgm.play();
+    });
+});
 canvas.parentElement!.append(vrButton);
 
 //scene init
@@ -45,6 +58,10 @@ const mat = new three.MeshBasicMaterial({
 //camera init
 let camera = new three.PerspectiveCamera(75, window.innerWidth/window.innerHeight,0.1,1000);
 camera.position.z = 5;
+
+const listener = new three.AudioListener();
+camera.add(listener);
+const scene_1_bgm = new three.Audio(listener);
 
 //controls init
 let controls = new OrbitControls(camera,renderer.domElement);
