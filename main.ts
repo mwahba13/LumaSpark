@@ -30,7 +30,8 @@ const audioLoader = new three.AudioLoader();
 
 //init VR Button
 let vrButton = VRButton.createButton(renderer);
-document.body.appendChild(renderer.domElement);
+//document.body.appendChild(renderer.domElement);
+document.body.appendChild( VRButton.createButton( renderer ) );
 vrButton.addEventListener('click', function(){
     audioLoader.load('sounds/gadda.ogg',function(buffer){
         //scene_1_bgm.setBuffer(buffer);
@@ -97,6 +98,11 @@ animate();
 
 function animate(){
     requestAnimationFrame(animate);
+    // renderer.setAnimationLoop( function () {
+
+    //     renderer.render( scene, camera );
+    
+    // } );
 
     splatQueue.Tick();
     controls.update();
@@ -134,9 +140,13 @@ function render()
 
 function initSplats()
 {
-    //Griffith Capture 1
+    // //Griffith Capture 1
     let splat_griffith1 = new memlSplat.Splat('https://lumalabs.ai/capture/3d4121a2-7503-457a-9d29-9fc68216fbd9');
     splatQueue.AddSplatToQueue(splat_griffith1);
+
+    // // GRIFFITH CELL 1
+    // let splat_griffithCell1 = new memlSplat.Splat('https://lumalabs.ai/capture/5bc39413-0235-474a-8686-1e4df062751c');
+    // splatQueue.AddSplatToQueue(splat_griffithCell1);
     
     // //DEVIL
     // let splat_griffithDevil_reg = new memlSplat.Splat('https://lumalabs.ai/capture/ff561ab6-0539-4dbb-bd86-01f31c79371d');

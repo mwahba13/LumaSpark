@@ -1,10 +1,23 @@
 import { LumaSplatsThree } from '@lumaai/luma-web';
 import { Box3, BoxGeometry, Clock, MathUtils, Mesh, MeshBasicMaterial, SphereGeometry, Uniform, Vector3, Vector4 } from 'three';
 import { Splat } from './splatWrapper';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { GlitchPass } from 'three/addons/postprocessing/GlitchPass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { LuminosityShader } from 'three/addons/shaders/LuminosityShader.js';
+import { DotScreenShader } from "three/examples/jsm/shaders/DotScreenShader.js";
+import { SobelOperatorShader } from "three/examples/jsm/shaders/SobelOperatorShader.js";
+import { ColorifyShader } from "three/examples/jsm/shaders/ColorifyShader.js";
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+//const composer = new EffectComposer( renderer );
+//const renderPass = new RenderPass(scene, camera);
 
 export class benchSplat extends Splat
 {
     public override SetShaderHooks(): void {
+
         this.lumaSplat.setShaderHooks({
             vertexShaderHooks:{
                 additionalUniforms:{
@@ -52,6 +65,7 @@ export class benchSplat extends Splat
 
     public override StartScene(): void {
         console.log("start bench scene");
+        
     }
 
     public override EndScene(): void {
