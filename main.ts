@@ -30,8 +30,8 @@ const audioLoader = new three.AudioLoader();
 
 //init VR Button
 let vrButton = VRButton.createButton(renderer);
-//document.body.appendChild(renderer.domElement);
-document.body.appendChild( VRButton.createButton( renderer ) );
+document.body.appendChild(renderer.domElement);
+//document.body.appendChild( VRButton.createButton( renderer ) );
 vrButton.addEventListener('click', function(){
     audioLoader.load('sounds/gadda.ogg',function(buffer){
         //scene_1_bgm.setBuffer(buffer);
