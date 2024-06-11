@@ -97,17 +97,18 @@ initSplats();
 animate();
 
 function animate(){
-    requestAnimationFrame(animate);
-    // renderer.setAnimationLoop( function () {
+    //requestAnimationFrame(animate);
+     renderer.setAnimationLoop( function () {
 
-    //     renderer.render( scene, camera );
-    
-    // } );
+         renderer.render( scene, camera );
+         splatQueue.Tick();
+         composer.render();
+         //controls.update();
+     } );
 
-    splatQueue.Tick();
-    controls.update();
 
-    render();
+
+    //render();
 }
 
 function render()
