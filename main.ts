@@ -86,8 +86,8 @@ composer.addPass(luminosityEffect);
 //composer.addPass(dotEffect);
 composer.addPass(sobelEffect);
 
-scene.fog = new FogExp2(new Color(0xe0e1ff).convertLinearToSRGB(), 0.20);
-scene.background = scene.fog.color;
+//scene.fog = new FogExp2(new Color(0xe0e1ff).convertLinearToSRGB(), 0.20);
+//scene.background = scene.fog.color;
 
 //init splatQueue
 let splatQueue = new memlSplat.SplatQueue(scene);
@@ -102,7 +102,7 @@ function animate(){
 
          renderer.render( scene, camera );
          splatQueue.Tick();
-         composer.render();
+         //composer.render();
          //controls.update();
      } );
 
@@ -143,6 +143,12 @@ function initSplats()
 {
     // //Griffith Capture 1
     let splat_griffith1 = new memlSplat.Splat('https://lumalabs.ai/capture/3d4121a2-7503-457a-9d29-9fc68216fbd9');
+    
+    splat_griffith1.SetFogObj(new three.Color("skyblue"),.05);
+    splat_griffith1.SetBackgroundColor(new three.Color("skyblue"));
+    splat_griffith1.SetPosition(0,0,3);
+    splat_griffith1.SetRotation(10,20,3);
+
     splatQueue.AddSplatToQueue(splat_griffith1);
 
     // // GRIFFITH CELL 1

@@ -1,5 +1,5 @@
 import { LumaSplatsThree } from '@lumaai/luma-web';
-import { Box3, BoxGeometry, Clock, Mesh, MeshBasicMaterial, SphereGeometry, Uniform, Vector3, Vector4 } from 'three';
+import { Box3, BoxGeometry, Clock, Color, Fog, FogExp2, Mesh, MeshBasicMaterial, SphereGeometry, Uniform, Vector3, Vector4 } from 'three';
 
 //basic splat - can be cropped and transformed
 export class Splat{
@@ -41,6 +41,10 @@ export class Splat{
     interpXt:number = 0.;
     interpYt:number = 0.;
     interpZt:number = 0.;
+
+    //fog
+    sceneFog:FogExp2;
+    backgrndColor:Color;
 
     constructor(uri:string, pos:Vector3 = new Vector3(0,0,0), rot:Vector3 = new Vector3(0,0,0))
     {
@@ -108,7 +112,18 @@ export class Splat{
             scene.add(maxSphere);
         }
 
+        this.lumaSplat.position.set(this.position.x,this.position.y,this.position.z);
+        this.lumaSplat.rotation.set(this.rotation.x,this.rotation.y,this.rotation.z);
+
         scene.add(this.lumaSplat);
+
+        if(this.sceneFog)
+        {
+            scene.fog = this.sceneFog;
+        }
+
+        scene.background = this.backgrndColor;
+        
     }
 
     public RemoveFromScene()
@@ -202,6 +217,26 @@ export class Splat{
         }
 
 
+    }
+
+    public SetFogObj(color:Color, density:number)
+    {
+        this.sceneFog = new FogExp2(color,density);
+    }
+
+    public SetBackgroundColor(color:Color)
+    {
+        this.backgrndColor = color;
+    }
+
+    public SetPosition(newX:number,newY:number,newZ:number)
+    {
+        this.position = new Vector3(newX,newY,newZ);
+    }
+
+    public SetRotation(newX:number,newY:number,newZ:number)
+    {
+        this.rotation = new Vector3(newX,newY,newZ);
     }
 }
 
