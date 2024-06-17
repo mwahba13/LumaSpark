@@ -55,9 +55,9 @@ camera.add(listener);
 let controls = new OrbitControls(camera,renderer.domElement);
 controls.update();
 
-
 //init splatQueue
 let splatQueue = new memlSplat.SplatQueue(scene);
+splatQueue.camera = camera;
 
 //init VR Button
 let vrButton = VRButton.createButton(renderer);
@@ -82,9 +82,9 @@ animate();
 
 function animate(){
      renderer.setAnimationLoop( function () {
-
-         renderer.render( scene, camera );
-         splatQueue.Tick();
+        controls.update();
+        renderer.render( scene, camera );
+        splatQueue.Tick();
      } );
 }
 
@@ -98,7 +98,7 @@ function initSplats()
     scene1.SetRotation(10,20,3);
     scene1.sceneTimer = 13.5;
     scene1.SetShaderHooks();
-   // splatQueue.AddSplatToQueue(scene1);
+    //splatQueue.AddSplatToQueue(scene1);
 
     //Scene 2
     let scene2 = new memlSplat.Splat('https://lumalabs.ai/capture/17d326ca-0e6e-43eb-a443-14b8031e1dc6');
@@ -108,7 +108,7 @@ function initSplats()
     scene2.SetRotation(10,20,3);
     scene2.sceneTimer = 20; 
     scene2.SetShaderHooks();
-   // splatQueue.AddSplatToQueue(scene2);
+   //// splatQueue.AddSplatToQueue(scene2);
 
     //Scene 3
     let scene3 = new memlSplat.Splat('https://lumalabs.ai/capture/33221f86-9518-4cee-88e0-ec995f5d1ffa');
@@ -168,7 +168,7 @@ function initSplats()
     scene8.SetRotation(10,20,3);
     scene8.sceneTimer = 18; //118
     scene8.SetShaderHooks();
-   // splatQueue.AddSplatToQueue(scene8);
+    //splatQueue.AddSplatToQueue(scene8);
 
     //Scene 9
     let scene9 = new Scene9('https://lumalabs.ai/capture/c6807892-34a1-4a6d-90c6-ef6a917d7843');
@@ -189,7 +189,7 @@ function initSplats()
     scene10.SetRotation(10,20,3);
     scene10.sceneTimer = 12.5;
     scene10.SetShaderHooks();
-    //splatQueue.AddSplatToQueue(scene10);
+   // splatQueue.AddSplatToQueue(scene10);
 
     //Scene 10 part 2
     let scene10_p2 = new Scene10_Part2('https://lumalabs.ai/capture/3fd4bb7a-ccbd-4395-935b-9522745a43f3');
@@ -210,7 +210,7 @@ function initSplats()
     scene11.SetRotation(10,20,3);
     scene11.sceneTimer = 11.5;
     scene11.SetShaderHooks();
-   // splatQueue.AddSplatToQueue(scene11);
+    //splatQueue.AddSplatToQueue(scene11);
 
     //Scene 11 part 2
     let scene11_p2 = new Scene11_Part2('https://lumalabs.ai/capture/d67a6bf8-3fa5-43eb-b22c-4068e66e8a7b');
@@ -251,16 +251,16 @@ function initSplats()
     scene13.SetRotation(10,20,3);
     scene13.sceneTimer = 32;
     scene13.SetShaderHooks();
-   // splatQueue.AddSplatToQueue(scene13);
+    //splatQueue.AddSplatToQueue(scene13);
 
     //Scene 14
-    let scene14 = new memlSplat.Splat('https://lumalabs.ai/capture/5bc39413-0235-474a-8686-1e4df062751c');
+    let scene14 = new Scene14('https://lumalabs.ai/capture/5bc39413-0235-474a-8686-1e4df062751c');
     //let scene13timer = elapsedTime;
     scene14.SetFogObj(new three.Color("black"),1);
     scene14.SetBackgroundColor(new three.Color("black"));
     scene14.SetPosition(0,0,3);
     scene14.SetRotation(10,20,3);
-    scene14.sceneTimer = 1;
+    scene14.sceneTimer = 120;
     scene14.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene14);
 

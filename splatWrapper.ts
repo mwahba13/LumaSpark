@@ -20,9 +20,11 @@ export class Splat{
     x:number;
     y:number;
     z:number;
+    colAdj:number;
     xUni:Uniform;
     yUni:Uniform;
     zUni:Uniform;
+    colAdjUni:Uniform;
     
     //box
     boundingBox:Box3;
@@ -53,6 +55,7 @@ export class Splat{
         this.x = 0;
         this.y = 0;
         this.z = 0;
+        this.colAdj = 0;
         this.xUni = new Uniform(1);
         this.yUni = new Uniform(1);
         this.zUni = new Uniform(1);
