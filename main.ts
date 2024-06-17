@@ -90,6 +90,8 @@ function animate(){
 
 function initSplats()
 {
+
+
     // Scene 1
     let scene1 = new memlSplat.Splat('https://lumalabs.ai/capture/eb4eee92-6c6c-455b-bf5a-faa4afcf5988');
     scene1.SetFogObj(new three.Color("skyblue"),.0);
@@ -98,7 +100,7 @@ function initSplats()
     scene1.SetRotation(10,20,3);
     scene1.sceneTimer = 13.5;
     scene1.SetShaderHooks();
-    //splatQueue.AddSplatToQueue(scene1);
+    splatQueue.AddSplatToQueue(scene1);
 
     //Scene 2
     let scene2 = new memlSplat.Splat('https://lumalabs.ai/capture/17d326ca-0e6e-43eb-a443-14b8031e1dc6');
@@ -108,7 +110,7 @@ function initSplats()
     scene2.SetRotation(10,20,3);
     scene2.sceneTimer = 20; 
     scene2.SetShaderHooks();
-   //// splatQueue.AddSplatToQueue(scene2);
+    splatQueue.AddSplatToQueue(scene2);
 
     //Scene 3
     let scene3 = new memlSplat.Splat('https://lumalabs.ai/capture/33221f86-9518-4cee-88e0-ec995f5d1ffa');
@@ -118,7 +120,7 @@ function initSplats()
     scene3.SetRotation(10,20,3);
     scene3.sceneTimer = 13;  
     scene3.SetShaderHooks();
-    //splatQueue.AddSplatToQueue(scene3);
+    splatQueue.AddSplatToQueue(scene3);
 
     //Scene 4
     let scene4 = new memlSplat.Splat('https://lumalabs.ai/capture/bb48e561-4c22-47a0-960b-2932f524d97c');
@@ -128,7 +130,7 @@ function initSplats()
     scene4.SetRotation(10,20,3);
     scene4.sceneTimer = 16; //71
     scene4.SetShaderHooks();
-   // splatQueue.AddSplatToQueue(scene4);
+    splatQueue.AddSplatToQueue(scene4);
 
     //Scene 5
     let scene5 = new memlSplat.Splat('https://lumalabs.ai/capture/3d4121a2-7503-457a-9d29-9fc68216fbd9');
@@ -138,7 +140,7 @@ function initSplats()
     scene5.SetRotation(10,20,3);
     scene5.sceneTimer = 9; //78
     scene5.SetShaderHooks();
-    //splatQueue.AddSplatToQueue(scene5);
+    splatQueue.AddSplatToQueue(scene5);
 
     //Scene 6
     let scene6 = new memlSplat.Splat('https://lumalabs.ai/capture/21d28749-4a37-48d6-b4b3-e4097f2ee0dc');
@@ -148,7 +150,7 @@ function initSplats()
     scene6.SetRotation(10,20,3);
     scene6.sceneTimer = 8; //86
     scene6.SetShaderHooks();
-   // splatQueue.AddSplatToQueue(scene6);
+    splatQueue.AddSplatToQueue(scene6);
 
     //Scene 7
     let scene7 = new Scene7('https://lumalabs.ai/capture/a3bef4db-a196-4e22-8a1c-5ed42730d6af');
@@ -158,7 +160,7 @@ function initSplats()
     scene7.SetRotation(10,20,3);
     scene7.sceneTimer = 12; //100
     scene7.SetShaderHooks();
-    //splatQueue.AddSplatToQueue(scene7);
+    splatQueue.AddSplatToQueue(scene7);
 
     //Scene 8
     let scene8 = new Scene8('https://lumalabs.ai/capture/c6807892-34a1-4a6d-90c6-ef6a917d7843');
@@ -168,7 +170,7 @@ function initSplats()
     scene8.SetRotation(10,20,3);
     scene8.sceneTimer = 18; //118
     scene8.SetShaderHooks();
-    //splatQueue.AddSplatToQueue(scene8);
+    splatQueue.AddSplatToQueue(scene8);
 
     //Scene 9
     let scene9 = new Scene9('https://lumalabs.ai/capture/c6807892-34a1-4a6d-90c6-ef6a917d7843');
@@ -178,7 +180,7 @@ function initSplats()
     scene9.SetRotation(10,20,3);
     scene9.sceneTimer = 12.5;
     scene9.SetShaderHooks();
-    //splatQueue.AddSplatToQueue(scene9);
+    splatQueue.AddSplatToQueue(scene9);
 
     //Scene 10
     let scene10 = new Scene10('https://lumalabs.ai/capture/3fd4bb7a-ccbd-4395-935b-9522745a43f3');
@@ -189,7 +191,7 @@ function initSplats()
     scene10.SetRotation(10,20,3);
     scene10.sceneTimer = 12.5;
     scene10.SetShaderHooks();
-   // splatQueue.AddSplatToQueue(scene10);
+    splatQueue.AddSplatToQueue(scene10);
 
     //Scene 10 part 2
     let scene10_p2 = new Scene10_Part2('https://lumalabs.ai/capture/3fd4bb7a-ccbd-4395-935b-9522745a43f3');
@@ -200,7 +202,7 @@ function initSplats()
     scene10_p2.SetRotation(10,20,3);
     scene10_p2.sceneTimer = 4;
     scene10_p2.SetShaderHooks();
-    //splatQueue.AddSplatToQueue(scene10_p2);
+    splatQueue.AddSplatToQueue(scene10_p2);
 
     //Scene 11
     let scene11 = new Scene11('https://lumalabs.ai/capture/d67a6bf8-3fa5-43eb-b22c-4068e66e8a7b');
@@ -210,7 +212,7 @@ function initSplats()
     scene11.SetRotation(10,20,3);
     scene11.sceneTimer = 11.5;
     scene11.SetShaderHooks();
-    //splatQueue.AddSplatToQueue(scene11);
+    splatQueue.AddSplatToQueue(scene11);
 
     //Scene 11 part 2
     let scene11_p2 = new Scene11_Part2('https://lumalabs.ai/capture/d67a6bf8-3fa5-43eb-b22c-4068e66e8a7b');
@@ -220,7 +222,7 @@ function initSplats()
     scene11_p2.SetRotation(10,20,3);
     scene11_p2.sceneTimer = 17;
     scene11_p2.SetShaderHooks();
-    //splatQueue.AddSplatToQueue(scene11_p2);
+    splatQueue.AddSplatToQueue(scene11_p2);
 
     //Scene 12
     let scene12 = new Scene12('https://lumalabs.ai/capture/ff561ab6-0539-4dbb-bd86-01f31c79371d');
@@ -230,7 +232,7 @@ function initSplats()
     scene12.SetRotation(10,20,3);
     scene12.sceneTimer = 12.5;
     scene12.SetShaderHooks();
-    //splatQueue.AddSplatToQueue(scene12);
+    splatQueue.AddSplatToQueue(scene12);
 
     //Scene 12 part 2
     let scene12_p2 = new Scene12_Part2('https://lumalabs.ai/capture/ff561ab6-0539-4dbb-bd86-01f31c79371d');
@@ -240,7 +242,7 @@ function initSplats()
     scene12_p2.SetRotation(10,20,3);
     scene12_p2.sceneTimer = 2;
     scene12_p2.SetShaderHooks();
-    //splatQueue.AddSplatToQueue(scene12_p2);
+    splatQueue.AddSplatToQueue(scene12_p2);
 
     //Scene 13
     let scene13 = new Scene13('https://lumalabs.ai/capture/5bc39413-0235-474a-8686-1e4df062751c');
@@ -251,7 +253,7 @@ function initSplats()
     scene13.SetRotation(10,20,3);
     scene13.sceneTimer = 32;
     scene13.SetShaderHooks();
-    //splatQueue.AddSplatToQueue(scene13);
+    splatQueue.AddSplatToQueue(scene13);
 
     //Scene 14
     let scene14 = new Scene14('https://lumalabs.ai/capture/5bc39413-0235-474a-8686-1e4df062751c');
@@ -260,7 +262,7 @@ function initSplats()
     scene14.SetBackgroundColor(new three.Color("black"));
     scene14.SetPosition(0,0,3);
     scene14.SetRotation(10,20,3);
-    scene14.sceneTimer = 1;
+    scene14.sceneTimer = 120;
     scene14.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene14);
 
