@@ -67,8 +67,8 @@ vrButton.addEventListener('click', function(){
     const scene_1_bgm = new three.Audio(listener);
     audioLoader.load('sounds/SorenNarration_Take1_Edited.mp3',function(buffer){
         scene_1_bgm.setBuffer(buffer);
-        scene_1_bgm.setLoop(true);
-        scene_1_bgm.setVolume(0.5);
+        scene_1_bgm.setLoop(false);
+        scene_1_bgm.setVolume(0.75);
         scene_1_bgm.play();
     });
 
@@ -96,7 +96,7 @@ function initSplats()
     let scene1 = new memlSplat.Splat('https://lumalabs.ai/capture/eb4eee92-6c6c-455b-bf5a-faa4afcf5988');
     scene1.SetFogObj(new three.Color("skyblue"),.0);
     scene1.SetBackgroundColor(new three.Color("black"));
-    scene1.SetPosition(.5,.7,0);
+    scene1.SetPosition(1,.5,0);
     scene1.SetRotation(0,180,0);
     scene1.sceneTimer = 13.5;
     scene1.SetShaderHooks();
@@ -106,7 +106,7 @@ function initSplats()
     let scene2 = new memlSplat.Splat('https://lumalabs.ai/capture/17d326ca-0e6e-43eb-a443-14b8031e1dc6');
     scene2.SetFogObj(new three.Color("skyblue"),.0);
     scene2.SetBackgroundColor(new three.Color("skyblue"));
-    scene2.SetPosition(0,1.3,0);
+    scene2.SetPosition(.3,2,0);
     scene2.SetRotation(0,-90,0);
     scene2.sceneTimer = 20; 
     scene2.SetShaderHooks();
@@ -128,7 +128,7 @@ function initSplats()
     scene4.SetBackgroundColor(new three.Color("darkgrey"));
     scene4.SetPosition(-2,2,-3);
     scene4.SetRotation(0,180,0);
-    scene4.sceneTimer = 16; //71
+    scene4.sceneTimer = 16; 
     scene4.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene4);
 
@@ -138,7 +138,7 @@ function initSplats()
     scene5.SetBackgroundColor(new three.Color("white"));
     scene5.SetPosition(-2,1,-2);
     scene5.SetRotation(0,-70,0);
-    scene5.sceneTimer = 9; //78
+    scene5.sceneTimer = 9; 
     scene5.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene5);
 
@@ -148,7 +148,7 @@ function initSplats()
     scene6.SetBackgroundColor(new three.Color("white"));
     scene6.SetPosition(2,1,-1);
     scene6.SetRotation(0,0,0);
-    scene6.sceneTimer = 8; //86
+    scene6.sceneTimer = 8; 
     scene6.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene6);
 
@@ -158,7 +158,7 @@ function initSplats()
     scene7.SetBackgroundColor(new three.Color("white"));
     scene7.SetPosition(2,1,-2);
     scene7.SetRotation(0,-95,0);
-    scene7.sceneTimer = 12; //100
+    scene7.sceneTimer = 12; 
     scene7.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene7);
 
@@ -168,7 +168,7 @@ function initSplats()
     scene8.SetBackgroundColor(new three.Color("white"));
     scene8.SetPosition(0,1,-1);
     scene8.SetRotation(0,-90,0);
-    scene8.sceneTimer = 18; //118
+    scene8.sceneTimer = 18; 
     scene8.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene8);
 
@@ -220,7 +220,7 @@ function initSplats()
     scene11_p2.SetBackgroundColor(new three.Color("black"));
     scene11_p2.SetPosition(0,1.2,0);
     scene11_p2.SetRotation(0,90,0);
-    scene11_p2.sceneTimer = 17;
+    scene11_p2.sceneTimer = 15;
     scene11_p2.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene11_p2);
 
@@ -230,7 +230,7 @@ function initSplats()
     scene12.SetBackgroundColor(new three.Color("black"));
     scene12.SetPosition(1.2,1,0);
     scene12.SetRotation(0,-90,0);
-    scene12.sceneTimer = 12.5;
+    scene12.sceneTimer = 14.5;
     scene12.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene12);
 
@@ -249,7 +249,7 @@ function initSplats()
     //let scene13timer = elapsedTime;
     scene13.SetFogObj(new three.Color("black"),.12);
     scene13.SetBackgroundColor(new three.Color("black"));
-    scene13.SetPosition(0,1.5,0);
+    scene13.SetPosition(0,6,0);
     scene13.SetRotation(0,-90,0);
     scene13.sceneTimer = 32;
     scene13.SetShaderHooks();

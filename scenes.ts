@@ -142,7 +142,7 @@ export class Scene9 extends Splat
                     x:['float',this.xUni],
                     y:['float',this.yUni],
                     z:['float',this.zUni],
-                    colAdj:['float',new Uniform(-0.2)]
+                    colAdj:['float',new Uniform(-0.1)]
                     
                 },
                 getSplatColor:`
@@ -178,8 +178,6 @@ export class Scene9 extends Splat
 
     }
 
-    }
-
 }
 
 export class Scene10 extends Splat
@@ -200,7 +198,7 @@ export class Scene10 extends Splat
                     x:['float',this.xUni],
                     y:['float',this.yUni],
                     z:['float',this.zUni],
-                    colAdj:['float',new Uniform(-0.2)]
+                    colAdj:['float',new Uniform(-0.1)]
                 },
                 getSplatColor:`
                     (vec4 rgba, vec3 pos, uint layersBitmask){
@@ -232,7 +230,7 @@ export class Scene10 extends Splat
         const lerpInterval = 9.;
         let t = clock.elapsedTime/lerpInterval;
         t = MathUtils.clamp(t,0,1);
-        this.x,this.z = MathUtils.lerp(10,0,t);
+        this.x,this.z = MathUtils.lerp(5,0,t);
     }
 
     // public override StartScene(): void {
@@ -265,7 +263,7 @@ export class Scene10_Part2 extends Splat
                     x:['float',this.xUni],
                     y:['float',this.yUni],
                     z:['float',this.zUni],
-                    colAdj:['float',new Uniform(-0.2)]
+                    colAdj:['float',new Uniform(-0.1)]
 
                 },
                 getSplatColor:`
@@ -296,7 +294,7 @@ export class Scene10_Part2 extends Splat
     //float y = cos(pos.x*1.0 + time)*z;
     //float z = sin(pos.x*1.0 + time)*z;
     protected override OnTick(clock:Clock): void {
-        const lerpInterval = 2.;
+        const lerpInterval = 6.;
         let t = clock.elapsedTime/lerpInterval;
         //t = MathUtils.clamp(t,0,1);
         this.x,this.z = MathUtils.lerp(0,1,t);
@@ -332,7 +330,7 @@ export class Scene11 extends Splat
                     x:['float',this.xUni],
                     y:['float',this.yUni],
                     z:['float',this.zUni],
-                    colAdj:['float',new Uniform(-0.3)],
+                    colAdj:['float',new Uniform(-0.1)],
                 },
                 getSplatColor:`
                     (vec4 rgba, vec3 pos, uint layersBitmask){
@@ -361,10 +359,10 @@ export class Scene11 extends Splat
     //float y = cos(pos.x*1.0 + time)*z;
     //float z = sin(pos.x*1.0 + time)*z;
     protected override OnTick(clock:Clock): void {
-        const lerpInterval = 1.5;
+        const lerpInterval = 2;
         let t = clock.elapsedTime/lerpInterval;
         t = MathUtils.clamp(t,0,1);
-        this.x,this.z = MathUtils.lerp(1,0,t);
+        this.x,this.z = MathUtils.lerp(2,0,t);
     }
 
     // public override StartScene(): void {
@@ -397,7 +395,7 @@ export class Scene11_Part2 extends Splat
                     x:['float',this.xUni],
                     y:['float',this.yUni],
                     z:['float',this.zUni],
-                    colAdj:['float',new Uniform(-0.25)],
+                    colAdj:['float',new Uniform(-0.1)],
                 },
                 getSplatColor:`
                     (vec4 rgba, vec3 pos, uint layersBitmask){
@@ -453,7 +451,7 @@ export class Scene12 extends Splat
                     x:['float',this.xUni],
                     y:['float',this.yUni],
                     z:['float',this.zUni],
-                    colAdj:['float',new Uniform(-0.25)],
+                    colAdj:['float',new Uniform(-0.1)],
                 },
                 getSplatColor:`
                     (vec4 rgba, vec3 pos, uint layersBitmask){
@@ -482,7 +480,7 @@ export class Scene12 extends Splat
     //float y = cos(pos.x*1.0 + time)*z;
     //float z = sin(pos.x*1.0 + time)*z;
     protected override OnTick(clock:Clock): void {
-        const lerpInterval = .5;
+        const lerpInterval = 2.5;
         let t = clock.elapsedTime/lerpInterval;
         t = MathUtils.clamp(t,0,1);
         this.x,this.z = MathUtils.lerp(5,0,t);
@@ -518,7 +516,7 @@ export class Scene12_Part2 extends Splat
                     x:['float',this.xUni],
                     y:['float',this.yUni],
                     z:['float',this.zUni],
-                    colAdj:['float',new Uniform(-0.3)],
+                    colAdj:['float',new Uniform(-0.1)],
                 },
                 getSplatColor:`
                     (vec4 rgba, vec3 pos, uint layersBitmask){
@@ -583,7 +581,7 @@ export class Scene13 extends Splat
                     x:['float',this.xUni],
                     y:['float',this.yUni],
                     z:['float',this.zUni],
-                    colAdj:['float',new Uniform(-0.3)],
+                    colAdj:['float',new Uniform(-0.2)],
 
                 },
                 getSplatColor:`
