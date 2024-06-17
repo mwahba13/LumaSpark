@@ -96,9 +96,9 @@ function initSplats()
     let scene1 = new memlSplat.Splat('https://lumalabs.ai/capture/eb4eee92-6c6c-455b-bf5a-faa4afcf5988');
     scene1.SetFogObj(new three.Color("skyblue"),.0);
     scene1.SetBackgroundColor(new three.Color("black"));
-    scene1.SetPosition(1,.5,0);
+    scene1.SetPosition(1.5,.5,0);
     scene1.SetRotation(0,180,0);
-    scene1.sceneTimer = 13.5;
+    scene1.sceneTimer = 13;
     scene1.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene1);
 
@@ -106,7 +106,7 @@ function initSplats()
     let scene2 = new memlSplat.Splat('https://lumalabs.ai/capture/17d326ca-0e6e-43eb-a443-14b8031e1dc6');
     scene2.SetFogObj(new three.Color("skyblue"),.0);
     scene2.SetBackgroundColor(new three.Color("skyblue"));
-    scene2.SetPosition(.3,2,0);
+    scene2.SetPosition(.5,2,0);
     scene2.SetRotation(0,-90,0);
     scene2.sceneTimer = 20; 
     scene2.SetShaderHooks();
@@ -208,9 +208,9 @@ function initSplats()
     let scene11 = new Scene11('https://lumalabs.ai/capture/d67a6bf8-3fa5-43eb-b22c-4068e66e8a7b');
     scene11.SetFogObj(new three.Color("black"),.0);
     scene11.SetBackgroundColor(new three.Color("black"));
-    scene11.SetPosition(0,1.2,0);
+    scene11.SetPosition(.2,1.2,0);
     scene11.SetRotation(0,90,0);
-    scene11.sceneTimer = 11.5;
+    scene11.sceneTimer = 12.5;
     scene11.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene11);
 
@@ -220,7 +220,7 @@ function initSplats()
     scene11_p2.SetBackgroundColor(new three.Color("black"));
     scene11_p2.SetPosition(0,1.2,0);
     scene11_p2.SetRotation(0,90,0);
-    scene11_p2.sceneTimer = 15;
+    scene11_p2.sceneTimer = 14;
     scene11_p2.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene11_p2);
 
