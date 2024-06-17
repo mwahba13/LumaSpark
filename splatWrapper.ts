@@ -1,5 +1,5 @@
 import { LumaSplatsThree } from '@lumaai/luma-web';
-import { Box3, BoxGeometry, Camera, Clock, Color, Fog, FogExp2, Light, Mesh, MeshBasicMaterial, PlaneGeometry, PointLight, SRGBColorSpace, SphereGeometry, Uniform, Vector3, Vector4 } from 'three';
+import { Box3, BoxGeometry, Camera, Clock, Color, Fog, FogExp2, Light, Mesh, MeshBasicMaterial, PlaneGeometry, PointLight, SRGBColorSpace, SphereGeometry, TextureLoader, Uniform, Vector3, Vector4 } from 'three';
 import { TIFFLoader } from 'three/examples/jsm/loaders/TIFFLoader.js';
 
 //basic splat - can be cropped and transformed
@@ -399,21 +399,21 @@ export class SplatQueue {
         let geo = new PlaneGeometry();
         let loader = new TIFFLoader();
         let planeMesh = new Mesh();
-        loader.load('tex/SparkEndCard.tif', function(texture){
-            texture.colorSpace = SRGBColorSpace;
 
-            const mat = new MeshBasicMaterial({map:texture});
-            planeMesh.geometry = geo;
-            planeMesh.material = mat;
-            planeMesh.position.set(0,0,4);
+
+        console.log("load credits");
+
+        const texture = new TextureLoader().load('tex/SparkEndCard.jpg');
+
+        const mat = new MeshBasicMaterial({map:texture});
+        planeMesh.geometry = geo;
+        planeMesh.material = mat;
+        planeMesh.position.set(0,0,4);
             
-        });
 
-        let light = new PointLight();
-        light.intensity = 10;
 
-        this.currentScene.add(light);
         this.currentScene.add(planeMesh)
+        //this.currentScene.background = new Color("white");
     }
 
 }

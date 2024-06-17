@@ -260,7 +260,7 @@ function initSplats()
     scene14.SetBackgroundColor(new three.Color("black"));
     scene14.SetPosition(0,0,3);
     scene14.SetRotation(10,20,3);
-    scene14.sceneTimer = 120;
+    scene14.sceneTimer = 1;
     scene14.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene14);
 
