@@ -15,7 +15,7 @@ import {VRButton} from "three/examples/jsm/webxr/VRButton.js";
 import {PLYLoader} from 'three/examples/jsm/loaders/PLYLoader.js'
 import { LumaSplatsThree } from '@lumaai/luma-web';
 import { Compass } from "./splatHelpers.ts";
-import { Scene7, Scene8, Scene9, Scene10, Scene10_Part2, Scene11, Scene11_Part2, Scene12, Scene13, Scene12_Part2 } from "./scenes.ts";
+import { Scene7, Scene8, Scene9, Scene10, Scene10_Part2, Scene11, Scene11_Part2, Scene12, Scene13, Scene12_Part2, Scene14 } from "./scenes.ts";
 
 let hasStarted = false;
 
@@ -28,26 +28,11 @@ renderer.xr.enabled = true;
 
 const audioLoader = new three.AudioLoader();
 
-//init VR Button
-let vrButton = VRButton.createButton(renderer);
-document.body.appendChild(renderer.domElement);
-//document.body.appendChild( VRButton.createButton( renderer ) );
-// vrButton.addEventListener('click', function(){
-//     const scene_1_bgm = new three.Audio(listener);
-//     audioLoader.load('sounds/SorenNarration_Take1_Edited.mp3',function(buffer){
-//         scene_1_bgm.setBuffer(buffer);
-//         scene_1_bgm.setLoop(true);
-//         scene_1_bgm.setVolume(0.5);
-//         scene_1_bgm.play();
-//     });
-// });
-canvas.parentElement!.append(vrButton);
+
 
 //scene init
 //setupInput();
 let scene = new three.Scene();
-let compass = new Compass();
-//compass.AddToScene(scene);
 
 const light = new three.PointLight();
 light.position.set(0,0,0);
@@ -65,91 +50,48 @@ camera.position.z = 5;
 const listener = new three.AudioListener();
 const scene_1_bgm = new three.Audio(listener);
 camera.add(listener);
-audioLoader.load('sounds/SorenNarration_Take1_Edited.mp3',function(buffer){
-    scene_1_bgm.setBuffer(buffer);
-    scene_1_bgm.setLoop(false);
-    scene_1_bgm.setVolume(.9);
-    scene_1_bgm.play();
-});
-//const scene_1_bgm = new three.Audio(listener);
 
 //controls init
 let controls = new OrbitControls(camera,renderer.domElement);
 controls.update();
 
-// //POST PROCESSING EFFECTS
-// const composer = new EffectComposer( renderer );
-// const renderPass = new RenderPass(scene, camera);
-// const dotEffect = new ShaderPass(DotScreenShader);
-// dotEffect.uniforms["scale"].value = 5;
-// const luminosityEffect = new ShaderPass(LuminosityShader);
-// const colorify = new ShaderPass(ColorifyShader);
-// colorify.uniforms["color"].value.setRGB(0,1,1);
-// const sobelEffect = new ShaderPass(SobelOperatorShader);
-// sobelEffect.uniforms["resolution"].value.x = window.innerWidth * window.devicePixelRatio;
-// sobelEffect.uniforms["resolution"].value.y = window.innerHeight * window.devicePixelRatio;
-
-// composer.addPass(renderPass);
-// composer.addPass(luminosityEffect);
-// //composer.addPass(colorify);
-// //composer.addPass(dotEffect);
-// composer.addPass(sobelEffect);
-
-//scene.fog = new FogExp2(new Color(0xe0e1ff).convertLinearToSRGB(), 0.20);
-//scene.background = scene.fog.color;
-
 //init splatQueue
 let splatQueue = new memlSplat.SplatQueue(scene);
+splatQueue.camera = camera;
+
+//init VR Button
+let vrButton = VRButton.createButton(renderer);
+document.body.appendChild(renderer.domElement);
+document.body.appendChild( VRButton.createButton( renderer ) );
+vrButton.addEventListener('click', function(){
+    const scene_1_bgm = new three.Audio(listener);
+    audioLoader.load('sounds/SorenNarration_Take1_Edited.mp3',function(buffer){
+        scene_1_bgm.setBuffer(buffer);
+        scene_1_bgm.setLoop(true);
+        scene_1_bgm.setVolume(0.5);
+        scene_1_bgm.play();
+    });
+
+    splatQueue.hasStarted = true;
+});
+canvas.parentElement!.append(vrButton);
 
 initSplats();
 
 animate();
 
 function animate(){
-    //requestAnimationFrame(animate);
      renderer.setAnimationLoop( function () {
-
-         renderer.render( scene, camera );
-         splatQueue.Tick();
-         //composer.render();
-         //controls.update();
+        controls.update();
+        renderer.render( scene, camera );
+        splatQueue.Tick();
      } );
-
-
-
-    //render();
 }
-
-function render()
-{
-    renderer.render(scene,camera);
-    //composer.render();
-}
-
-// function setupInput()
-// {
-//     addEventListener("keypress",(e)=>{
-//         if(e.key == "1")
-//         {
-//             splatQueue.LoadSceneByIndex(0);
-//         }
-//         else if(e.key == "2")
-//         {
-//             splatQueue.LoadSceneByIndex(1);
-//         }
-//         else if(e.key =="3")
-//         {
-//             splatQueue.LoadSceneByIndex(2);
-//         }
-//         else if(e.key == "4")
-//         {
-//             splatQueue.LoadSceneByIndex(3);
-//         }
-//     });
-// }
 
 function initSplats()
 {
+
+
     // Scene 1
     let scene1 = new memlSplat.Splat('https://lumalabs.ai/capture/eb4eee92-6c6c-455b-bf5a-faa4afcf5988');
     scene1.SetFogObj(new three.Color("skyblue"),.0);
@@ -314,7 +256,7 @@ function initSplats()
     splatQueue.AddSplatToQueue(scene13);
 
     //Scene 14
-    let scene14 = new memlSplat.Splat('https://lumalabs.ai/capture/5bc39413-0235-474a-8686-1e4df062751c');
+    let scene14 = new Scene14('https://lumalabs.ai/capture/5bc39413-0235-474a-8686-1e4df062751c');
     //let scene13timer = elapsedTime;
     scene14.SetFogObj(new three.Color("black"),1);
     scene14.SetBackgroundColor(new three.Color("black"));
@@ -324,51 +266,6 @@ function initSplats()
     scene14.SetShaderHooks();
     splatQueue.AddSplatToQueue(scene14);
 
-    // // // GRIFFITH CELL 1
-    // let griffithCell = new memlSplat.Splat('https://lumalabs.ai/capture/5bc39413-0235-474a-8686-1e4df062751c');
-    // splatQueue.AddSplatToQueue(griffithCell);
-    
-    // //DEVIL
-    // let splat_griffithDevil_reg = new memlSplat.Splat('https://lumalabs.ai/capture/ff561ab6-0539-4dbb-bd86-01f31c79371d');
-    // splatQueue.AddSplatToQueue(splat_griffithDevil_reg);
-    // splat_griffithDevil_reg.sceneTimer = 10;
-
-    // //DOOR
-    // let splat_door_reg = new memlSplat.Splat("https://lumalabs.ai/embed/f12d1582-4910-43aa-a70f-5ddfe6a65aff");
-    // splatQueue.AddSplatToQueue(splat_door_reg);
-    // //splat_door_reg.sceneTimer = 10;
-
-    // //GRFFITH BLACK WATER CAGE
-    // let splat_blackWaterCage_reg = new memlSplat.Splat('https://lumalabs.ai/capture/40990996-46d7-4133-a14c-3145b8994d57');
-    // splatQueue.AddSplatToQueue(splat_blackWaterCage_reg);
-
-    // //BENCH
-    // let splat_bench_reg = new memlSplat.Splat('https://lumalabs.ai/embed/f4e7305c-ac98-4b02-9a5d-36a4b6ca0750');
-    // let splat_bench_twist = new benchSplat('https://lumalabs.ai/embed/f4e7305c-ac98-4b02-9a5d-36a4b6ca0750');
-    // let splat_bench_rev = new benchSplatRev('https://lumalabs.ai/embed/f4e7305c-ac98-4b02-9a5d-36a4b6ca0750');
-    // splat_bench_reg.sceneTimer = 10;
-    // splat_bench_twist.sceneTimer = 10;
-    // splat_bench_rev.sceneTimer = 10;
-    // //splat_0.debugDrawBoundingBox = true;
-    // splat_bench_twist.SetShaderHooks();
-    // splat_bench_reg.SetShaderHooks();
-    // splat_bench_rev.SetShaderHooks();
-    // //add splats to queue
-    // splatQueue.AddSplatToQueue(splat_bench_reg);
-    // splatQueue.AddSplatToQueue(splat_bench_twist);
-    // splatQueue.AddSplatToQueue(splat_bench_rev);
-
-    //Door
-    /*
-    let splat_door_reg = new memlSplat.Splat("https://lumalabs.ai/embed/f12d1582-4910-43aa-a70f-5ddfe6a65aff");
-    let splat_door_twist = new doorSplat("https://lumalabs.ai/embed/f12d1582-4910-43aa-a70f-5ddfe6a65aff");
-    splat_door_reg.sceneTimer = 9999999999999999999;
-    splat_door_twist.sceneTimer = 9999999999999999999;
-    splat_door_reg.SetShaderHooks();
-    splat_door_twist.SetShaderHooks();
-    splatQueue.AddSplatToQueue(splat_door_reg);
-    splatQueue.AddSplatToQueue(splat_door_twist);
-    */
 }
 
 
