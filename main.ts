@@ -68,7 +68,7 @@ camera.add(listener);
 audioLoader.load('sounds/SorenNarration_Take1_Edited.mp3',function(buffer){
     scene_1_bgm.setBuffer(buffer);
     scene_1_bgm.setLoop(false);
-    scene_1_bgm.setVolume(0.5);
+    scene_1_bgm.setVolume(.9);
     scene_1_bgm.play();
 });
 //const scene_1_bgm = new three.Audio(listener);
