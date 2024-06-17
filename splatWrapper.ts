@@ -273,7 +273,7 @@ export class SplatQueue {
         this.splats = [];
         this.currentScene = scene;
         this.isFinished = false;
-        this.hasStarted = true;
+        this.hasStarted = false;
     }
 
     public AddSplatToQueue(splat:Splat)
