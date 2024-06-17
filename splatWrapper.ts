@@ -1,5 +1,6 @@
 import { LumaSplatsThree } from '@lumaai/luma-web';
-import { Box3, BoxGeometry, Clock, Color, Fog, FogExp2, Mesh, MeshBasicMaterial, SphereGeometry, Uniform, Vector3, Vector4 } from 'three';
+import { Box3, BoxGeometry, Camera, Clock, Color, Fog, FogExp2, Light, Mesh, MeshBasicMaterial, PlaneGeometry, PointLight, SRGBColorSpace, SphereGeometry, Uniform, Vector3, Vector4 } from 'three';
+import { TIFFLoader } from 'three/examples/jsm/loaders/TIFFLoader.js';
 
 //basic splat - can be cropped and transformed
 export class Splat{
@@ -256,6 +257,9 @@ export class SplatQueue {
     timer:THREE.Clock;
 
     isFinished: boolean;
+    hasStarted:boolean;
+
+    camera:Camera;
 
     constructor(scene:THREE.Scene)
     {
@@ -266,6 +270,7 @@ export class SplatQueue {
         this.splats = [];
         this.currentScene = scene;
         this.isFinished = false;
+        this.hasStarted = true;
     }
 
     public AddSplatToQueue(splat:Splat)
@@ -287,8 +292,9 @@ export class SplatQueue {
         console.log("load splat");
         if(!this.isFinished)
             {
-                if(this.timer.getElapsedTime() == 0)
+                if(this.timer.getElapsedTime() == 0 && this.hasStarted)
                 {
+                    console.log("start timer");
                     this.timer.start();
                 }
 
@@ -327,7 +333,7 @@ export class SplatQueue {
 
             if(this.isFinished)
             {
-                return;
+                return ;
             }
 
             this.currentSplat.Tick(this.timer);
@@ -340,8 +346,9 @@ export class SplatQueue {
     {
         if(!this.isFinished)
         {
-            if(this.timer.getElapsedTime() == 0)
+            if(this.timer.getElapsedTime() == 0 && this.hasStarted)
             {
+                console.log("start timer");
                 this.timer.start();
             }
             //if time is up, load next splat
@@ -354,12 +361,19 @@ export class SplatQueue {
                     console.log("end of queue");
                     this.isFinished = true;
                     this.timer.stop();
+
+                    this.currentSplat.EndScene();
+                    this.currentSplat.RemoveFromScene();
+
+                    this.OnFinish();
                 }
                 else
                 {
                     //remove old scene
                     this.currentSplat.EndScene();
                     this.currentSplat.RemoveFromScene();
+
+                    this.camera.position.set(0,0,0);
     
                     //add new scene
                     this.currentSplat = this.splats[this.currentSplatIndex];
@@ -374,6 +388,29 @@ export class SplatQueue {
             } 
         }
         
+    }
+
+    private OnFinish()
+    {
+
+        let geo = new PlaneGeometry();
+        let loader = new TIFFLoader();
+        let planeMesh = new Mesh();
+        loader.load('tex/SparkEndCard.tif', function(texture){
+            texture.colorSpace = SRGBColorSpace;
+
+            const mat = new MeshBasicMaterial({map:texture});
+            planeMesh.geometry = geo;
+            planeMesh.material = mat;
+            planeMesh.position.set(0,0,4);
+            
+        });
+
+        let light = new PointLight();
+        light.intensity = 10;
+
+        this.currentScene.add(light);
+        this.currentScene.add(planeMesh)
     }
 
 }
