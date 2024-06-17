@@ -195,13 +195,13 @@ export class Scene9 extends Splat
     //float z = sin(pos.x*1.0 + time)*z;
     protected override OnTick(clock:Clock): void {
         //let timer = clock.elapsedTime;
-        const lerpInterval = 6.;
+        const lerpInterval = 20.;
         let t = clock.elapsedTime/lerpInterval;
         //t = MathUtils.clamp(t,0,1);
-        this.x,this.z = MathUtils.lerp(0,50,t);
+        this.x,this.z = MathUtils.lerp(0,15,t);
         //const lerpInterval = 1200000.;
         // if (timer > 15) {
-        //     this.x,this.z = MathUtils.lerp(5,500,t);
+        //     this.x,this.z = MathUtils.lerp(2,50,t);
         // }
     }
 
@@ -309,11 +309,11 @@ export class Scene10_Part2 extends Splat
                 getSplatTransform:`
                     (vec3 pos, uint layersBitMask)
                     {
-                        float x = time *z;
-                        float y = time *z;
-                        float z = time *z;
+                        float x = cos(pos.x*1.0 + time)*z;
+                        float y = cos(pos.x*1.0 + time)*z;
+                        float z = sin(pos.x*1.0 + time)*z;
                         return mat4(
-                            x, y, z, 0.,
+                            1., 0., 0., 0.,
                             0.,1.,0.,0.,
                             0.,0.,1.,0.,
                             x, y, z, 1.                         
@@ -394,7 +394,7 @@ export class Scene11 extends Splat
         const lerpInterval = 1.5;
         let t = clock.elapsedTime/lerpInterval;
         t = MathUtils.clamp(t,0,1);
-        this.x,this.z = MathUtils.lerp(100,0,t);
+        this.x,this.z = MathUtils.lerp(1,0,t);
     }
 
     // public override StartScene(): void {
@@ -441,7 +441,7 @@ export class Scene11_Part2 extends Splat
                         float y = cos(pos.x*1.0 + time)*z;
                         float z = sin(pos.x*1.0 + time)*z;
                         return mat4(
-                            x,y,z,0.,
+                            1.,0.,0.,0.,
                             0.,1.,0.,0.,
                             0.,0.,1.,0.,
                             x, y, z, 1.                        
@@ -455,10 +455,10 @@ export class Scene11_Part2 extends Splat
     //float y = cos(pos.x*1.0 + time)*z;
     //float z = sin(pos.x*1.0 + time)*z;
     protected override OnTick(clock:Clock): void {
-        const lerpInterval = 6.;
+        const lerpInterval = 100.;
         let t = clock.elapsedTime/lerpInterval;
         //t = MathUtils.clamp(t,0,1);
-        this.x,this.z = MathUtils.lerp(0,50,t);
+        this.x,this.z = MathUtils.lerp(0,10,t);
     }
 
     // public override StartScene(): void {
@@ -522,7 +522,7 @@ export class Scene12 extends Splat
         const lerpInterval = .5;
         let t = clock.elapsedTime/lerpInterval;
         t = MathUtils.clamp(t,0,1);
-        this.x,this.z = MathUtils.lerp(100,0,t);
+        this.x,this.z = MathUtils.lerp(5,0,t);
     }
 
     // public override StartScene(): void {
