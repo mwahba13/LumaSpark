@@ -1,21 +1,9 @@
 import * as three from "three";
-import * as memlSplat from "./splatWrapper.ts";
+import * as memlSplat from "./src/Splat.ts";
+import { SplatQueue } from "./src/SplatQueue.ts";
 import {OrbitControls} from 'three-addons';
-import { WebGLRenderer, PerspectiveCamera, Scene, Color, FogExp2, Uniform } from 'three';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { GlitchPass } from 'three/addons/postprocessing/GlitchPass.js';
-import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
-import { LuminosityShader } from 'three/addons/shaders/LuminosityShader.js';
-import { DotScreenShader } from "three/examples/jsm/shaders/DotScreenShader.js";
-import { SobelOperatorShader } from "three/examples/jsm/shaders/SobelOperatorShader.js";
-import { ColorifyShader } from "three/examples/jsm/shaders/ColorifyShader.js";
-import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import {VRButton} from "three/examples/jsm/webxr/VRButton.js";
-import {PLYLoader} from 'three/examples/jsm/loaders/PLYLoader.js'
-import { LumaSplatsThree } from '@lumaai/luma-web';
-import { Compass } from "./splatHelpers.ts";
-import { Scene7, Scene8, Scene9, Scene10, Scene10_Part2, Scene11, Scene11_Part2, Scene12, Scene13, Scene12_Part2, Scene14 } from "./scenes.ts";
+import { Scene7, Scene8, Scene9, Scene10, Scene10_Part2, Scene11, Scene11_Part2, Scene12, Scene13, Scene12_Part2, Scene14 } from "./src/Scenes.ts";
 
 let hasStarted = false;
 
@@ -56,7 +44,7 @@ let controls = new OrbitControls(camera,renderer.domElement);
 controls.update();
 
 //init splatQueue
-let splatQueue = new memlSplat.SplatQueue(scene);
+let splatQueue = new SplatQueue(scene);
 splatQueue.camera = camera;
 
 //init VR Button
