@@ -2,7 +2,7 @@ import { Splat } from "./Splat";
 import { Clock } from 'three';
 
 
-abstract class SplatAction {
+export abstract class SplatAction {
 
     actionTime:number = 0;
 

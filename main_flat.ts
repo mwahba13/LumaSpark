@@ -45,10 +45,11 @@ controls.update();
 //init splatQueue
 let splatQueue = new SplatQueue(scene);
 splatQueue.camera = camera;
+
 document.body.appendChild(renderer.domElement);
 
 //init VR Button
-let vrButton = VRButton.createButton(renderer);
+//let vrButton = VRButton.createButton(renderer);
 
 audioLoader.load('sounds/SorenNarration_Take1_Edited.mp3',function(buffer){
     scene_1_bgm.setBuffer(buffer);
@@ -60,15 +61,12 @@ audioLoader.load('sounds/SorenNarration_Take1_Edited.mp3',function(buffer){
 splatQueue.hasStarted = true;
 initSplats();
 
-animate();
-
 function animate(){
-     renderer.setAnimationLoop( function () {
-        controls.update();
-        renderer.render( scene, camera );
-        splatQueue.Tick();
-     } );
+    renderer.render( scene, camera );
+    splatQueue.Tick();
+    controls.update();
 }
+renderer.setAnimationLoop(animate);
 
 function initSplats()
 {

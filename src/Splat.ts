@@ -1,5 +1,6 @@
 import { LumaSplatsThree } from '@lumaai/luma-web';
 import { Box3,  Clock, Color, FogExp2, Mesh, MeshBasicMaterial, PlaneGeometry, PointLight, SRGBColorSpace, SphereGeometry, TextureLoader, Uniform, Vector3, Vector4 } from 'three';
+import { SplatAction } from './SplatAction';
 
 //basic splat - can be cropped and transformed
 export class Splat{

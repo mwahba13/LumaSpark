@@ -1,5 +1,6 @@
 import { Splat } from './Splat';
 import { Camera, Clock, Mesh, MeshBasicMaterial, PlaneGeometry, TextureLoader } from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { TIFFLoader } from 'three/examples/jsm/loaders/TIFFLoader.js';
 
 
@@ -134,8 +135,8 @@ export class SplatQueue {
                     this.currentSplat.EndScene();
                     this.currentSplat.RemoveFromScene();
 
-                    this.camera.position.set(0,0,0);
-    
+                   // this.camera.position.set(0,0,0);
+                   
                     //add new scene
                     this.currentSplat = this.splats[this.currentSplatIndex];
                     this.currentSplat.AddToScene(this.currentScene);
