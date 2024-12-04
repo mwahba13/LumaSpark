@@ -51,12 +51,18 @@ document.body.appendChild(renderer.domElement);
 //init VR Button
 //let vrButton = VRButton.createButton(renderer);
 
-audioLoader.load('sounds/SorenNarration_Take1_Edited.mp3',function(buffer){
-    scene_1_bgm.setBuffer(buffer);
-    scene_1_bgm.setLoop(false);
-    scene_1_bgm.setVolume(0.75);
-    scene_1_bgm.play();
-});
+audioLoader.load("/sounds/SorenNarration_Take1_Edited.mp3",
+    function(buffer){
+        scene_1_bgm.setBuffer(buffer);
+        scene_1_bgm.setLoop(false);
+        scene_1_bgm.setVolume(0.75);
+        scene_1_bgm.play();
+    },
+    undefined,
+    (err) =>{
+        console.error("Audio loading error: ", err);
+    }
+);
 
 splatQueue.hasStarted = true;
 initSplats();
